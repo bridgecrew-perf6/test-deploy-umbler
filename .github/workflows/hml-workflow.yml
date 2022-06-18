@@ -1,0 +1,25 @@
+on: ['push', 'pull_request']
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: git fetch --prune --unshallow
+
+    - shell: bash
+      if: github.ref == 'refs/heads/main'
+      name: Create SSH deployment key
+      env:
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: ./scripts/deploy.sh
+
+    - name: Deployment to Umbler
+      if: github.ref == 'refs/heads/main'
+      run: git remote add umbler ssh://hml.zapisp.com.br@hml-zapisp-com-br.umbler.net:9922/~/git/hml-zapisp-com-br.git && git push umbler master
+      env:
+        CI: true
+        
