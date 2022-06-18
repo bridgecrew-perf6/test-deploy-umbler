@@ -1,13 +1,15 @@
-on: ['push', 'pull_request']
-
-workflow_dispatch:
-  inputs:
-    logLevel:
-      description: 'Log level'     
-      required: true
-      default: 'warning'
-    tags:
-      description: 'Test scenario tags' 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags' 
 
 jobs:
 
@@ -31,4 +33,3 @@ jobs:
       run: git remote add umbler ssh://hml.zapisp.com.br@hml-zapisp-com-br.umbler.net:9922/~/git/hml-zapisp-com-br.git && git push umbler master
       env:
         CI: true
-        
