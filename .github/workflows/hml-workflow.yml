@@ -30,9 +30,9 @@ jobs:
     - name: Deployment to Umbler
       run: |
         git remote add umbler ssh://hml.zapisp.com.br@hml-zapisp-com-br.umbler.net:9922/~/git/hml-zapisp-com-br.git
-        git pull umbler master --allow-unrelated-histories --rebase
         git config --global user.email "deployumbler@github.com"
         git config --global user.name "deploy umbler"
+        git pull umbler master --allow-unrelated-histories --rebase
         git commit --allow-empty -m "empty commity" --no-verify
         git push umbler master --no-verify --force
       env:
